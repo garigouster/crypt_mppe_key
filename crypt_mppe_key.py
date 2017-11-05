@@ -2,10 +2,10 @@
 ###############################################################################
 # crypt_mppe_key.py: Encrypt or decrypt RADIUS' MS-MPPE-Keys
 ###############################################################################
-# Version: 1.0
+# Version: 1.0.1
 ###############################################################################
 #
-# Copyright (c) 2016 garigouster
+# Copyright (c) 2016,2017 garigouster
 # Contact: garigouster dot git at google dot com
 #
 # This program is free software: you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
 ###############################################################################
 
 PROGRAM = 'crypt_mppe_key.py'
-VERSION = '1.0'
+VERSION = '1.0.1'
 AUTHOR  = 'garigouster';
 LICENSE = 'GPLv3';
 
@@ -86,9 +86,37 @@ def mppe_decrypt(cipher,secret,authenticator,pad="\0"):
     return clear[0:L]
 
 def usage():
+    print 'Description:'
+    print ' '*4 + 'Encrypt or decrypt a MS-MPPE-Send-Key or MS-MPPE-Recv-Key attribute (of RADIUS messages).'
+    print
     print 'Usage:'
     print ' '*4 + PROGRAM + ' [-e] [-s|h|b] shared-key clear-key authenticator salt'
     print ' '*4 + PROGRAM + ' -d [-s|h|b] shared-key ms-mppe-key authenticator'
+    print
+    print 'Options:'
+    print ' '*4 + '-e (default)'
+    print ' '*2*4 + 'Encrypt a clear key for a MS-MPPE-Send-Key/MS-MPPE-Recv-Key attribute'
+    print ' '*4 + '-d'
+    print ' '*2*4 + 'Decrypt a MS-MPPE-Send-Key/MS-MPPE-Recv-Key attribute for a clear key'
+    print
+    print 'Parameters:'
+    print ' '*4 + 'shared-key   : the shared secret used by the RADIUS server/clients'
+    print ' '*4 + 'clear-key    : the clear key to encrypt'
+    print ' '*4 + 'ms-mppe-key  : the MS-MPPE-Send-Key/MS-MPPE-Recv-Key attribute to decrypt'
+    print ' '*4 + 'authenticator: the authenticator attribute of previous RADIUS (Request) message'
+    print ' '*4 + 'salt         : the salt (2 bytes) used to encrypt the clear key'
+    print
+    print ' '*4 + 'shared-key has to be a simple (ASCII) text.'
+    print ' '*4 + 'clear-key, ms-mppe-key, authenticator and salt have to be hex strings'
+    print ' '*4 + '(the digit sequence can be splited with colon signs).'
+    print
+    print 'Output switchs:'
+    print ' '*4 + '-s (default)'
+    print ' '*2*4 + 'hex string with 2-digit sequence splited with colon signs'
+    print ' '*4 + '-h'
+    print ' '*2*4 + 'full hex string'
+    print ' '*4 + '-b'
+    print ' '*2*4 + 'binary data'
 
 if __name__ == '__main__':
     FORMAT_HEX_SEQUENCE = 's'
